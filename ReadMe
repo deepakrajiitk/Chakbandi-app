@@ -1,7 +1,7 @@
-# command to load docker image
+#command to load docker image
 docker load -i my-python-app.tar
 
-# command to run code
+#command to run code
 docker run -it -v "Relative Path to shp file folder":/app/data chakbandi-app           
 
 - after entering command, it will ask for file name(give just file name without path)
