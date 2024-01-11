@@ -1,0 +1,10 @@
+# command to load docker image
+docker load -i my-python-app.tar
+
+# command to run code
+docker run -it -v "Relative Path to shp file folder":/app/data chakbandi-app           
+
+- after entering command, it will ask for file name(give just file name without path)
+- output files will be saved in same folder where input file is present
+    - consolidation_output.shp
+    - chakmarg.shp

@@ -22,16 +22,15 @@ from chakmarg_module.chakmarg_algo import *
 
 # reading input parcels shp file
 print("reading file...")
-parcels_file_path = input("Enter the path to the parcels Shapefile: ")
+parcels_file_path = input("Enter the name of the parcels Shapefile: ")
 
-folder_path = os.path.dirname(parcels_file_path)
+folder_path = "data/"
 
 try:
-    parcels = gpd.read_file(parcels_file_path)
+    parcels = gpd.read_file(folder_path+parcels_file_path)
 except FileNotFoundError:
-    print(f"The file at '{file_path}' does not exist.")
+    print(f"The file '{parcels_file_path}' does not exist.")
 
-parcels.to_file(folder_path+"/temp.shp")
 
 # finding representative point of each parcel
 parcels['representative_point'] = parcels['geometry'].representative_point()
@@ -186,13 +185,13 @@ gdf2 = rectangles_to_gdf(owners_dict, cell_size, xmin, ymin, parcels.crs)
 # removing unnecessary part from gdf
 result_gdf2 = overlay_gdf(gdf2, parcels, island_ids)
 result_gdf2 = result_gdf2[~result_gdf2['owner'].str.startswith('no_owner')]
-result_gdf2.to_file(folder_path + "/consolidation_output.shp")
+result_gdf2.to_file(folder_path + "consolidation_output.shp")
 print("---------------output shp file is saved successfully-----------------------")
 
 print("finding optimal chakmarg......")
 island_rectangles, island_owners = getRectangleIslandWise(owners_dict)
 chakmarg_gdf = createAllChakMargs(island_ids, square_matrix, islands_rect_cover_dict, island_owners, island_rectangles, cell_size, xmin, ymin, parcels.crs)
-chakmarg_gdf.to_file(folder_path + "/chakmarg.shp")
+chakmarg_gdf.to_file(folder_path + "chakmarg.shp")
 print("-----------------chakmarg shp file saved successfully-----------------------------")
 
 
